@@ -1,7 +1,7 @@
 {
   "name": "magpie",
   "productName": "Magpie",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Magpie: a design library that sorts itself.",
   "main": "electron/main.js",
   "scripts": {
