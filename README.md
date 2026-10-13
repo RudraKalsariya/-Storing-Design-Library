@@ -19,10 +19,7 @@ The interface is deliberately minimal, inspired by [cosmos.so](https://www.cosmo
 
 The app isn't signed with a paid Apple or Microsoft developer certificate, so the first launch needs one extra step:
 
-- **Mac:** if it says the app "is damaged" or "can't be opened", open the **Terminal** app, paste this line and press Enter, then open the app again:
-  ```
-  xattr -cr "/Applications/Magpie.app"
-  ```
+- **Mac:** open Magpie. When macOS says it can't verify the app, click **Done**. Then open **System Settings → Privacy & Security**, scroll down to the message about Magpie and click **Open Anyway**. (Versions before 1.2.2 weren't signed at all, so macOS called them "damaged". For those, run `xattr -cr "/Applications/Magpie.app"` in **Terminal** instead.)
 - **Windows:** if a blue "Windows protected your PC" box appears, click **More info → Run anyway**.
 
 After that it opens like any other app.

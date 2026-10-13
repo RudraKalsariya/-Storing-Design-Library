@@ -50,6 +50,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx electron-builder ${{ matrix.args }} --publish never
+      # Mac builds are ad-hoc signed (no paid Apple certificate). A valid signature
+      # is what lets macOS offer "Open Anyway" instead of calling the app damaged.
+      - if: runner.os == 'macOS'
+        run: |
+          app=$(ls -d dist/mac*/Magpie.app | head -1)
+          codesign --verify --deep --strict --verbose=2 "$app"
+          codesign -dv "$app" 2>&1 | grep -E "Signature|Identifier|Format"
       # Uploaded as the installer file itself (no zip), named after the file.
       - uses: actions/upload-artifact@v7
         with:
@@ -103,5 +110,5 @@ jobs:
             Installing over an older version keeps your library and settings: they live outside the app.
             Upgrading from **Design Library** (Magpie's old name)? Your library and settings carry over. On a Mac, delete the old *Design Library* app from Applications afterwards.
 
-            First launch on a Mac: if it says the app is damaged or can't be opened, run `xattr -cr "/Applications/Magpie.app"` in Terminal, then open it again.
+            First launch on a Mac: open Magpie, click **Done** when macOS says it can't verify the app, then go to **System Settings → Privacy & Security**, scroll down and click **Open Anyway**. You only do this once.
             On Windows, if you see "Windows protected your PC", click **More info → Run anyway**.
